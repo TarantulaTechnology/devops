@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Takes latest files from GitHub and pushes them to &quot;PublicBucket&quot; S3 (e.g. https://s3.amazonaws.com/stelligentlabs/scripts/jenkins/jenkins_versioning.sh)</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name></name>
+        <refspec></refspec>
+        <url>git@github.com:stelligent/devopsinthecloud.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <disableSubmodules>false</disableSubmodules>
+    <recursiveSubmodules>false</recursiveSubmodules>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <authorOrCommitter>false</authorOrCommitter>
+    <clean>false</clean>
+    <wipeOutWorkspace>false</wipeOutWorkspace>
+    <pruneBranches>false</pruneBranches>
+    <remotePoll>false</remotePoll>
+    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+    <gitTool>Default</gitTool>
+    <submoduleCfg class="list"/>
+    <relativeTargetDir></relativeTargetDir>
+    <reference></reference>
+    <excludedRegions></excludedRegions>
+    <excludedUsers></excludedUsers>
+    <gitConfigName></gitConfigName>
+    <gitConfigEmail></gitConfigEmail>
+    <skipTag>false</skipTag>
+    <includedRegions></includedRegions>
+    <scmName></scmName>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>* * * * *</spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders/>
+  <publishers>
+    <hudson.plugins.s3.S3BucketPublisher>
+      <profileName>stelligentlabs</profileName>
+      <entries>
+        <hudson.plugins.s3.Entry>
+          <bucket>ditcbsjartifacts/scripts/aws</bucket>
+          <sourceFile>scripts/aws/sqs_receive_message.rb</sourceFile>
+        </hudson.plugins.s3.Entry>
+        <hudson.plugins.s3.Entry>
+          <bucket>ditcbsjartifacts/scripts/aws</bucket>
+          <sourceFile>scripts/aws/sqs_send_message.rb</sourceFile>
+        </hudson.plugins.s3.Entry>
+        <hudson.plugins.s3.Entry>
+          <bucket>ditcbsjartifacts/scripts/aws</bucket>
+          <sourceFile>scripts/aws/terminate.rb</sourceFile>
+        </hudson.plugins.s3.Entry>
+        <hudson.plugins.s3.Entry>
+          <bucket>ditcbsjartifacts/scripts/aws</bucket>
+          <sourceFile>scripts/jenkins/jenkins_versioning.sh</sourceFile>
+        </hudson.plugins.s3.Entry>
+        <hudson.plugins.s3.Entry>
+          <bucket>ditcbsjartifacts/scripts/aws</bucket>
+          <sourceFile>scripts/aws/create_config_domain.rb</sourceFile>
+        </hudson.plugins.s3.Entry>
+        <hudson.plugins.s3.Entry>
+          <bucket>ditcbsjartifacts/scripts/aws</bucket>
+          <sourceFile>scripts/aws/showback_domain.rb</sourceFile>
+        </hudson.plugins.s3.Entry>
+      </entries>
+    </hudson.plugins.s3.S3BucketPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>
